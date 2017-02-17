@@ -1,0 +1,5 @@
+
+link: https://home.openweathermap.org/
+
+name: Default
+key: cd42dcb5b11a2ba9d2468b688095232b
