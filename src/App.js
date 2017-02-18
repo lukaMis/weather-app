@@ -1,14 +1,18 @@
 import React from 'react';
 import './App.css';
 
-import xhr from 'xhr'
+import xhr from 'xhr';
+
+import Plot from './Plot.js';
 
 class App extends React.Component {
   constructor() {
     super();
     this.state = {
       location : '',
-      data: {}
+      data: {},
+      dates: [],
+      temps: []
     }
   };
 
@@ -29,11 +33,21 @@ class App extends React.Component {
     xhr({
       url: url
     }, function(err, data) {
+      var body = JSON.parse(data.body);
+      var list = body.list;
+      var dates = [];
+      var temps = [];
+      for(let i = 0; i < list.length; i++) {
+        dates.push(list[i].dt_txt);
+        temps.push(list[i].main.temp);
+      };
+
       self.setState({
-        data: JSON.parse(data.body)
+        data: body,
+        dates: dates,
+        temps: temps
       });
     });
-    
   };
 
   render() {
