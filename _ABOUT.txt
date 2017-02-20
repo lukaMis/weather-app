@@ -1,0 +1,3 @@
+
+Weather app tutorial from:
+http://academy.plot.ly/
