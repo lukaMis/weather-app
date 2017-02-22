@@ -5,6 +5,10 @@ import xhr from 'xhr';
 
 import Plot from './Plot.js';
 
+import {connect} from 'react-redux';
+
+import {changeLocation} from './actions';
+
 class App extends React.Component {
   constructor() {
     super();
@@ -34,14 +38,18 @@ class App extends React.Component {
   };
 
   changeLocation = (evt) => {
+    /*
     this.setState({
       location: evt.target.value
     });
+    */
+    this.props.dispatch(changeLocation(evt.target.value));
   };
 
   fetchData = (evt) => {
     evt.preventDefault();
-    var location = encodeURIComponent(this.state.location);
+    // var location = encodeURIComponent(this.state.location);
+    var location = encodeURIComponent(this.props.location);
     var urlP = 'http://api.openweathermap.org/data/2.5/forecast?q=';
     var urlS = '&APPID=cd42dcb5b11a2ba9d2468b688095232b&units=metric';
     var url = urlP + location + urlS;
@@ -85,7 +93,7 @@ class App extends React.Component {
             <input 
               type="text"
               placeholder={"City, Country"}
-              value={this.state.location}
+              value={this.props.location}
               onChange={this.changeLocation}
             />
           </label>
@@ -115,4 +123,12 @@ class App extends React.Component {
   };
 };
 
-export default App;
+// export default connect()(App);
+
+function mapStateToProps(state) {
+  return {
+    location: state.location
+  };
+};
+
+export default connect(mapStateToProps)(App);
